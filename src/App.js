@@ -7,10 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className='bg-dark'>
+    <div id='contenitoreHome'>
       <NavBar/>
       <Home/>
-      <Footer/>
     </div>
   );
 }

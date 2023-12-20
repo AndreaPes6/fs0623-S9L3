@@ -1,24 +1,37 @@
+import React from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 
-function Footer() {
+function Footer({ currentPage, itemsPerPage, totalItems, onPageChange }) {
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <footer className=''>
-        <Pagination className='justify-content-center'>
-          <Pagination.First />
-          <Pagination.Prev />
-          <Pagination.Item>{1}</Pagination.Item> 
-          <Pagination.Item>{2}</Pagination.Item>
-          <Pagination.Item>{3}</Pagination.Item>
-          <Pagination.Item>{4}</Pagination.Item>
-          <Pagination.Item>{5}</Pagination.Item>
-          <Pagination.Item>{6}</Pagination.Item>
-          <Pagination.Item>{7}</Pagination.Item>
-          <Pagination.Item>{8}</Pagination.Item> 
-          <Pagination.Item>{9}</Pagination.Item>
-          <Pagination.Item>{10}</Pagination.Item>
-          <Pagination.Next />
-          <Pagination.Last />
-        </Pagination>
+      <Pagination className='justify-content-center'>
+        <Pagination.First onClick={() => onPageChange && onPageChange(1)} />
+        <Pagination.Prev
+          onClick={() =>
+            onPageChange && onPageChange(currentPage > 1 ? currentPage - 1 : 1)
+          }
+        />
+        {pageNumbers.map((number) => (
+          <Pagination.Item
+            key={number}
+            active={number === currentPage}
+            onClick={() => onPageChange && onPageChange(number)}
+          >
+            {number}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() =>
+            onPageChange && onPageChange(currentPage < pageNumbers.length ? currentPage + 1 : currentPage)
+          }
+        />
+        <Pagination.Last onClick={() => onPageChange && onPageChange(pageNumbers.length)} />
+      </Pagination>
     </footer>
   );
 }
